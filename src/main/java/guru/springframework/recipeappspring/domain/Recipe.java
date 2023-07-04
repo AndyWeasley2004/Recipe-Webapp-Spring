@@ -2,6 +2,7 @@ package guru.springframework.recipeappspring.domain;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -9,7 +10,7 @@ public class Recipe {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     private String description;
     private Integer prepTime;
@@ -17,11 +18,13 @@ public class Recipe {
     private Integer servings;
     private String source;
     private String url;
+    @Lob
     private String directions;
-    // TODO: add Difficulty difficulty
+    @Enumerated(value = EnumType.STRING) // to avoid error when adding or changing enum class
+    private Difficulty difficulty;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
-    private Set<Ingredient> ingredients;
+    private Set<Ingredient> ingredients = new HashSet<>();
 
     @Lob
     private byte[] image;
@@ -29,12 +32,18 @@ public class Recipe {
     @OneToOne(cascade = CascadeType.ALL)
     private Notes notes;
 
+    @ManyToMany
+    @JoinTable(name = "recipe_category",
+            joinColumns = @JoinColumn(name = "recipe_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
+    private Set<Category> categories = new HashSet<>();
+
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Long id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getDescription() {
@@ -115,5 +124,21 @@ public class Recipe {
 
     public void setIngredients(Set<Ingredient> ingredients) {
         this.ingredients = ingredients;
+    }
+
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
     }
 }
