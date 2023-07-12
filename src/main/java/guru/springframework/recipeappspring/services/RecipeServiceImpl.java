@@ -20,7 +20,8 @@ public class RecipeServiceImpl implements RecipeService {
     private final RecipeCommandToRecipe recipeCommandToRecipe;
     private final RecipeToRecipeCommand recipeToRecipeCommand;
 
-    public RecipeServiceImpl(RecipeRepository recipeRepository, RecipeCommandToRecipe recipeCommandToRecipe, RecipeToRecipeCommand recipeToRecipeCommand) {
+    public RecipeServiceImpl(RecipeRepository recipeRepository, RecipeCommandToRecipe recipeCommandToRecipe,
+                             RecipeToRecipeCommand recipeToRecipeCommand) {
         this.recipeRepository = recipeRepository;
         this.recipeCommandToRecipe = recipeCommandToRecipe;
         this.recipeToRecipeCommand = recipeToRecipeCommand;
@@ -44,15 +45,19 @@ public class RecipeServiceImpl implements RecipeService {
         return recipe.get();
     }
 
+
+    @Override
+    @Transactional
+    public RecipeCommand findCommandById(Long id) {
+        return recipeToRecipeCommand.convert(getById(id));
+    }
+
     @Override
     @Transactional
     public RecipeCommand saveRecipeCommand(RecipeCommand recipeCommand) {
         Recipe convertRecipe = recipeCommandToRecipe.convert(recipeCommand);
-        Recipe savedRecipe = null;
-        if (convertRecipe != null) {
-            savedRecipe = recipeRepository.save(convertRecipe);
-            log.debug("Saved RecipeId: " + savedRecipe.getId());
-        }
+        Recipe savedRecipe = recipeRepository.save(convertRecipe);
+        log.debug("Saved RecipeId: " + savedRecipe.getId());
         return recipeToRecipeCommand.convert(savedRecipe);
     }
 }

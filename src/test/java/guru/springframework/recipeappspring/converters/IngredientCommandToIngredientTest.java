@@ -18,8 +18,8 @@ public class IngredientCommandToIngredientTest {
     public static final Recipe RECIPE = new Recipe();
     public static final BigDecimal AMOUNT = new BigDecimal("1");
     public static final String DESCRIPTION = "Cheeseburger";
-    public static final Long ID_VALUE = new Long(1L);
-    public static final Long UOM_ID = new Long(2L);
+    public static final Long ID_VALUE = Long.valueOf(1L);
+    public static final Long UOM_ID = Long.valueOf(2L);
 
     IngredientCommandToIngredient converter;
 
@@ -47,7 +47,7 @@ public class IngredientCommandToIngredientTest {
         command.setDescription(DESCRIPTION);
         UnitOfMeasureCommand unitOfMeasureCommand = new UnitOfMeasureCommand();
         unitOfMeasureCommand.setId(UOM_ID);
-        command.setUnitOfMeasure(unitOfMeasureCommand);
+        command.setUom(unitOfMeasureCommand);
 
         //when
         Ingredient ingredient = converter.convert(command);

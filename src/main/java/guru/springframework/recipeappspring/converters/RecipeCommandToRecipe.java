@@ -10,9 +10,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
-/**
- * Created by jt on 6/21/17.
- */
 @Component
 public class RecipeCommandToRecipe implements Converter<RecipeCommand, Recipe> {
 
@@ -20,8 +17,8 @@ public class RecipeCommandToRecipe implements Converter<RecipeCommand, Recipe> {
     private final IngredientCommandToIngredient ingredientConverter;
     private final NotesCommandToNotes notesConverter;
 
-    public RecipeCommandToRecipe(CategoryCommandToCategory categoryConverter, IngredientCommandToIngredient ingredientConverter,
-                                 NotesCommandToNotes notesConverter) {
+    public RecipeCommandToRecipe(CategoryCommandToCategory categoryConverter,
+                                 IngredientCommandToIngredient ingredientConverter, NotesCommandToNotes notesConverter) {
         this.categoryConverter = categoryConverter;
         this.ingredientConverter = ingredientConverter;
         this.notesConverter = notesConverter;
@@ -31,10 +28,6 @@ public class RecipeCommandToRecipe implements Converter<RecipeCommand, Recipe> {
     @Nullable
     @Override
     public Recipe convert(RecipeCommand source) {
-        if (source == null) {
-            return null;
-        }
-
         final Recipe recipe = new Recipe();
         recipe.setId(source.getId());
         recipe.setCookTime(source.getCookTime());

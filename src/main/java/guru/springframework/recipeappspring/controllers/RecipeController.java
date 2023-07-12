@@ -18,22 +18,29 @@ public class RecipeController {
         this.recipeService = recipeService;
     }
 
-    @RequestMapping({"/recipe/show/{id}"})
-    public String showById(@PathVariable String id, Model model) {
-        model.addAttribute("recipe", recipeService.getById(Long.parseLong(id)));
+    @RequestMapping("/recipe/{id}/show")
+    public String showById(@PathVariable String id, Model model){
+        model.addAttribute("recipe", recipeService.getById(Long.valueOf(id)));
         return "recipe/show";
     }
 
-    @RequestMapping({"recipe/new"})
+    @RequestMapping("recipe/new")
     public String newRecipe(Model model){
         model.addAttribute("recipe", new RecipeCommand());
+        System.out.println("Form created");
         return "recipe/recipeForm";
     }
 
-    @PostMapping("recipe")
-    public String saveOrUpdate(@ModelAttribute RecipeCommand command){
+    @PostMapping("recipe/show")
+    public String saveOrUpdate(@ModelAttribute RecipeCommand command) {
         RecipeCommand savedCommand = recipeService.saveRecipeCommand(command);
-        System.out.println("This part is runned");
-        return "redirect:/recipe/show/" + savedCommand.getId();
+        System.out.println("redirect:/recipe/" + savedCommand.getId() + "/show");
+        return "redirect:/recipe/" + savedCommand.getId() + "/show";
+    }
+
+    @RequestMapping({"/recipe/{id}/update"})
+    public String updateRecipe(@PathVariable String id, Model model){
+        model.addAttribute("recipe", recipeService.findCommandById(Long.valueOf(id)));
+        return "recipe/recipeForm";
     }
 }
