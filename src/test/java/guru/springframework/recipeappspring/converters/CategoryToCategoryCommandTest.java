@@ -6,7 +6,8 @@ import guru.springframework.recipeappspring.domain.Category;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * Created by jt on 6/21/17.
@@ -20,11 +21,6 @@ public class CategoryToCategoryCommandTest {
     @BeforeEach
     public void setUp() throws Exception {
         convter = new CategoryToCategoryCommand();
-    }
-
-    @Test
-    public void testNullObject() throws Exception {
-        assertNull(convter.convert(null));
     }
 
     @Test

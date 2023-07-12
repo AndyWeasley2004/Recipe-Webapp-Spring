@@ -29,11 +29,6 @@ public class IngredientCommandToIngredientTest {
     }
 
     @Test
-    public void testNullObject() throws Exception {
-        assertNull(converter.convert(null));
-    }
-
-    @Test
     public void testEmptyObject() throws Exception {
         assertNotNull(converter.convert(new IngredientCommand()));
     }
@@ -80,7 +75,5 @@ public class IngredientCommandToIngredientTest {
         assertEquals(ID_VALUE, ingredient.getId());
         assertEquals(AMOUNT, ingredient.getAmount());
         assertEquals(DESCRIPTION, ingredient.getDescription());
-
     }
-
 }

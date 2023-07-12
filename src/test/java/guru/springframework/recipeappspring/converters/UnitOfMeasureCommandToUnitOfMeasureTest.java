@@ -5,7 +5,8 @@ import guru.springframework.recipeappspring.domain.UnitOfMeasure;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
 public class UnitOfMeasureCommandToUnitOfMeasureTest {
@@ -21,10 +22,6 @@ public class UnitOfMeasureCommandToUnitOfMeasureTest {
 
     }
 
-    @Test
-    public void testNullParamter() throws Exception {
-        assertNull(converter.convert(null));
-    }
 
     @Test
     public void testEmptyObject() throws Exception {

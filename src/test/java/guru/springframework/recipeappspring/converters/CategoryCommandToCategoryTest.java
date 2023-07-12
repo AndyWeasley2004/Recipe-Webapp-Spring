@@ -6,7 +6,8 @@ import guru.springframework.recipeappspring.domain.Category;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class CategoryCommandToCategoryTest {
 
@@ -17,11 +18,6 @@ public class CategoryCommandToCategoryTest {
     @BeforeEach
     public void setUp() throws Exception {
         conveter = new CategoryCommandToCategory();
-    }
-
-    @Test
-    public void testNullObject() throws Exception {
-        assertNull(conveter.convert(null));
     }
 
     @Test

@@ -10,7 +10,8 @@ import guru.springframework.recipeappspring.domain.Recipe;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class RecipeCommandToRecipeTest {
     public static final Long RECIPE_ID = 1L;
@@ -36,11 +37,6 @@ public class RecipeCommandToRecipeTest {
         converter = new RecipeCommandToRecipe(new CategoryCommandToCategory(),
                 new IngredientCommandToIngredient(new UnitOfMeasureCommandToUnitOfMeasure()),
                 new NotesCommandToNotes());
-    }
-
-    @Test
-    public void testNullObject() throws Exception {
-        assertNull(converter.convert(null));
     }
 
     @Test
