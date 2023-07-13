@@ -33,6 +33,7 @@
                         <p class="card-text">ID: 1</p>
                         <p class="card-text">Link: <a href="#">View</a></p>
                         <a href="#">Update</a>
+                        <a href="#">Delete</a>
                     </div>
                 </div>
             </div>
@@ -43,6 +44,7 @@
                         <p class="card-text">ID: 2</p>
                         <p class="card-text">Link: <a href="#">View</a></p>
                         <a href="#">Update</a>
+                        <a href="#">Delete</a>
                     </div>
                 </div>
             </div>
@@ -53,6 +55,7 @@
                         <p class="card-text">ID: 3</p>
                         <p class="card-text">Link: <a href="#">View</a></p>
                         <a href="#">Update</a>
+                        <a href="#">Delete</a>
                     </div>
                 </div>
             </div>
@@ -72,6 +75,7 @@
                                                            th:href="@{'/recipe/' + ${recipes[i].id} + '/show'}">View</a>
                             </p>
                             <a href="#" th:href="@{'/recipe/' + ${recipes[i].getId()} + '/update'}">Update</a>
+                            <a href="#" th:href="@{'/recipe/' + ${recipes[i].getId()} + '/delete'}">Delete</a>
                         </div>
                     </div>
                     <!--/*@thymesVar id="recipe" type="guru.springframework.domain.Recipe"*/-->

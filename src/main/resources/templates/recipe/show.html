@@ -83,7 +83,10 @@
                 </div>
             </div>
             <div class="card" style="margin-top: 20px">
-                <h3 class="card-header bg-danger" style="margin-bottom: 10px;--bs-bg-opacity: .5">Ingredients</h3>
+                <div class="card-header bg-danger" style="margin-bottom: 10px;--bs-bg-opacity: .5">
+                    <h3>Ingredients</h3>
+                    <a class="btn" href="#" th:href="@{'/recipe/' + ${recipe.id} + '/ingredients'}" role="button">View</a>
+                </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-12">
