@@ -16,6 +16,7 @@ import java.util.Optional;
 @Slf4j
 @Service
 public class IngredientServiceImpl implements IngredientService {
+
     private final IngredientToIngredientCommand ingredientToIngredientCommand;
     private final IngredientCommandToIngredient ingredientCommandToIngredient;
     private final RecipeRepository recipeRepository;
@@ -23,8 +24,7 @@ public class IngredientServiceImpl implements IngredientService {
 
     public IngredientServiceImpl(IngredientToIngredientCommand ingredientToIngredientCommand,
                                  IngredientCommandToIngredient ingredientCommandToIngredient,
-                                 RecipeRepository recipeRepository,
-                                 UnitOfMeasureRepository unitOfMeasureRepository) {
+                                 RecipeRepository recipeRepository, UnitOfMeasureRepository unitOfMeasureRepository) {
         this.ingredientToIngredientCommand = ingredientToIngredientCommand;
         this.ingredientCommandToIngredient = ingredientCommandToIngredient;
         this.recipeRepository = recipeRepository;
@@ -42,15 +42,17 @@ public class IngredientServiceImpl implements IngredientService {
         }
 
         Recipe recipe = recipeOptional.get();
+        log.debug("recipe's id is " + recipe.getId());
 
         Optional<IngredientCommand> ingredientCommandOptional = recipe.getIngredients().stream()
                 .filter(ingredient -> ingredient.getId().equals(ingredientId))
-                .map( ingredient -> ingredientToIngredientCommand.convert(ingredient)).findFirst();
+                .map(ingredient -> ingredientToIngredientCommand.convert(ingredient)).findFirst();
 
         if(!ingredientCommandOptional.isPresent()){
             //todo impl error handling
             log.error("Ingredient id not found: " + ingredientId);
         }
+        log.debug("ingredientCommandOption's recipeId is " + ingredientCommandOptional.get().getRecipeId());
 
         return ingredientCommandOptional.get();
     }
@@ -59,16 +61,19 @@ public class IngredientServiceImpl implements IngredientService {
     @Transactional
     public IngredientCommand saveIngredientCommand(IngredientCommand command) {
         Optional<Recipe> recipeOptional = recipeRepository.findById(command.getRecipeId());
+
         if(!recipeOptional.isPresent()){
             log.error("Recipe not found for id: " + command.getRecipeId());
             return new IngredientCommand();
         } else {
             Recipe recipe = recipeOptional.get();
+
             Optional<Ingredient> ingredientOptional = recipe
                     .getIngredients()
                     .stream()
                     .filter(ingredient -> ingredient.getId().equals(command.getId()))
                     .findFirst();
+
             if(ingredientOptional.isPresent()){
                 // update the value
                 Ingredient ingredientFound = ingredientOptional.get();
@@ -77,16 +82,27 @@ public class IngredientServiceImpl implements IngredientService {
                 ingredientFound.setUom(unitOfMeasureRepository
                         .findById(command.getUom().getId())
                         .orElseThrow(() -> new RuntimeException("UOM NOT FOUND"))); //todo address this
-            }else {
+            } else {
                 //add new Ingredient
-                recipe.addIngredient(ingredientCommandToIngredient.convert(command));
+                Ingredient ingredient = ingredientCommandToIngredient.convert(command);
+                ingredient.setRecipe(recipe);
+                recipe.addIngredient(ingredient);
             }
 
             Recipe savedRecipe = recipeRepository.save(recipe);
-            return ingredientToIngredientCommand.convert(savedRecipe.getIngredients().stream()
+
+            Optional<Ingredient> savedIngredientOptional = savedRecipe.getIngredients().stream()
                     .filter(recipeIngredients -> recipeIngredients.getId().equals(command.getId()))
-                    .findFirst()
-                    .get());
+                    .findFirst();
+
+            if(!savedIngredientOptional.isPresent()){
+                savedIngredientOptional = savedRecipe.getIngredients().stream()
+                        .filter(recipeIngredients -> recipeIngredients.getDescription().equals(command.getDescription()))
+                        .filter(recipeIngredients -> recipeIngredients.getAmount().equals(command.getAmount()))
+                        .filter(recipeIngredients -> recipeIngredients.getUom().equals(command.getUom()))
+                        .findFirst();
+            }
+            return ingredientToIngredientCommand.convert(savedIngredientOptional.get());
         }
     }
 }

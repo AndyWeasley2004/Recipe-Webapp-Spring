@@ -29,7 +29,7 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public Set<Recipe> getRecipes() {
-        log.debug("I am in the service");
+        log.debug("I'm in the service");
 
         Set<Recipe> recipeSet = new HashSet<>();
         recipeRepository.findAll().iterator().forEachRemaining(recipeSet::add);
@@ -38,10 +38,13 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public Recipe getById(Long id) {
+
         Optional<Recipe> recipe = recipeRepository.findById(id);
+
         if (!recipe.isPresent()) {
             throw new RuntimeException("Recipe does not exist");
         }
+
         return recipe.get();
     }
 

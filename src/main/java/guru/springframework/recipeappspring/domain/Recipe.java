@@ -1,12 +1,14 @@
 package guru.springframework.recipeappspring.domain;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @Entity
 public class Recipe {
 
@@ -20,8 +22,10 @@ public class Recipe {
     private Integer servings;
     private String source;
     private String url;
+
     @Lob
     private String directions;
+
     @Enumerated(value = EnumType.STRING) // to avoid error when adding or changing enum class
     private Difficulty difficulty;
 
@@ -29,7 +33,7 @@ public class Recipe {
     private Set<Ingredient> ingredients = new HashSet<>();
 
     @Lob
-    private byte[] image;
+    private Byte[] image;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Notes notes;
@@ -49,7 +53,9 @@ public class Recipe {
 
     // preserve relationship between notes and recipe
     public void setNotes(Notes notes) {
-        this.notes = notes;
-        notes.setRecipe(this);
+        if(notes != null){
+            this.notes = notes;
+            notes.setRecipe(this);
+        }
     }
 }

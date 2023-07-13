@@ -1,13 +1,15 @@
 package guru.springframework.recipeappspring.domain;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @EqualsAndHashCode(exclude = {"recipes"})
 @Entity
 public class Category {
@@ -19,11 +21,4 @@ public class Category {
 
     @ManyToMany(mappedBy = "categories")
     private Set<Recipe> recipes = new HashSet<>();
-
-    public Category() {}
-
-    protected boolean canEqual(final Object other) {
-        return other instanceof Category;
-    }
-
 }
