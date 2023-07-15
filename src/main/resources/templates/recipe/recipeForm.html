@@ -22,8 +22,8 @@
     <div class="col-md-6 offset-3">
         <form th:object="${recipe}" th:action="@{/recipe/}" method="post" style="margin-bottom: 25px">
             <input type="hidden" th:field="*{id}"/>
-            <div class="card border border-primary border-3">
-                <h2 class="card-header bg-primary text-white" style="--bs-bg-opacity: 1">Edit Recipe Information</h2>
+            <div class="card border border-primary border-4">
+                <h4 class="card-header bg-primary text-white" style="--bs-bg-opacity: 1">Edit Recipe Information</h4>
                 <div class="card-body">
                     <div class="mb-3">
                         <label class="form-label">Recipe Description:</label>
@@ -59,7 +59,12 @@
                         </div>
                         <div class="col">
                             <label class="form-label">Difficulty:</label>
-                            <select class="form-control">
+                            <select class="form-control" th:field="*{difficulty}">
+                                <option th:each="difficultyValue : ${T(guru.springframework.recipeappspring.domain.Difficulty).values()}"
+                                        th:value="${difficultyValue.name()}"
+                                        th:text="${difficultyValue.name()}">val</option>
+                            </select>
+                            <select class="form-control" th:remove="all">
                                 <option>Easy</option>
                                 <option>Medium</option>
                                 <option>Hard</option>
@@ -82,13 +87,13 @@
                     </div>
                 </div>
             </div>
-            <div class="card border-3 border-warning border-opacity-75" style="margin-top: 20px">
+            <div class="card border-4 border-warning border-opacity-75" style="margin-top: 20px">
                 <div class="card-header bg-warning" style="--bs-bg-opacity: .75">
                     <div class="row">
-                        <div class="col-md-10">
+                        <div class="col-md-10 text-white">
                             <h2>Ingredients</h2>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-1" style="padding-left: 45px">
                             <a class="btn btn-light" href="#" th:href="@{'/recipe/' + ${recipe.id} + '/ingredients'}" role="button">Edit</a>
                         </div>
                     </div>

@@ -96,4 +96,5 @@ class RecipeControllerTest {
                 .andExpect(view().name("redirect:/"));
         verify(recipeService, times(1)).deleteById(anyLong());
     }
+
 }
