@@ -37,11 +37,14 @@ class ImageControllerTest {
 
     @Test
     void handleImagePost() throws Exception{
-        MockMultipartFile file = new MockMultipartFile("file", "testing.txt", "text/plain",
-                "One hundred and one percent soul".getBytes());
-        this.mockMvc.perform(multipart(("/recipe/1/image")).file(file))
+        MockMultipartFile multipartFile =
+                new MockMultipartFile("imagefile", "testing.txt", "text/plain",
+                        "Spring Framework Guru".getBytes());
+
+        mockMvc.perform(multipart("/recipe/1/image").file(multipartFile))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(header().string("Location", "/recipe/1/show"));
+
         verify(imageService, times(1)).saveImageFile(anyLong(), any());
     }
 
