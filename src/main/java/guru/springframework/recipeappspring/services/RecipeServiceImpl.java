@@ -43,7 +43,7 @@ public class RecipeServiceImpl implements RecipeService {
         Optional<Recipe> recipe = recipeRepository.findById(id);
 
         if (!recipe.isPresent()) {
-            throw new NotFoundException("Recipe does not exist"); // use custom exception
+            throw new NotFoundException("Recipe does not exist for ID value " + id.toString()); // use custom exception
         }
 
         return recipe.get();
