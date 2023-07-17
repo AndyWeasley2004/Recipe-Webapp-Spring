@@ -5,6 +5,7 @@ import guru.springframework.recipeappspring.commands.RecipeCommand;
 import guru.springframework.recipeappspring.converters.RecipeCommandToRecipe;
 import guru.springframework.recipeappspring.converters.RecipeToRecipeCommand;
 import guru.springframework.recipeappspring.domain.Recipe;
+import guru.springframework.recipeappspring.exceptions.NotFoundException;
 import guru.springframework.recipeappspring.repositories.RecipeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,8 +16,7 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 /**
@@ -100,6 +100,16 @@ public class RecipeServiceImplTest {
         //no 'when', since method has void return type
         //then
         verify(recipeRepository, times(1)).deleteById(anyLong());
+    }
+
+    @Test
+    public void testRecipeGetIdNotFound() throws Exception {
+        Optional<Recipe> optionalRecipe = Optional.empty();
+        when(recipeRepository.findById(anyLong())).thenReturn(optionalRecipe);
+        assertThrows(NotFoundException.class,
+                ()->{
+                    Recipe result = recipeService.getById(1L);
+                });
     }
 
 }
