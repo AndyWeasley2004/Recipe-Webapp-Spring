@@ -10,13 +10,14 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 class RecipeControllerTest {
@@ -32,7 +33,9 @@ class RecipeControllerTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
         controller = new RecipeController(recipeService);
-        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(controller)
+                .setControllerAdvice(new ControllerExceptionHandler())
+                .build();
 
     }
 
@@ -63,18 +66,21 @@ class RecipeControllerTest {
 
     @Test
     public void testPostNewRecipeForm() throws Exception {
+        Long ID = 1L;
         RecipeCommand command = new RecipeCommand();
-        command.setId(2L);
+        command.setId(ID);
 
         when(recipeService.saveRecipeCommand(any())).thenReturn(command);
 
-        mockMvc.perform(post("/recipe/")
-                                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-//                .param("id", "")
-//                .param("description", "some string")
-                )
-                .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/recipe/2/show"));
+        mockMvc.perform(MockMvcRequestBuilders.post("/recipe")
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .param("id", "")
+                        .param("description", "some string")
+                        .param("prepTime", "999")
+                        .param("directions","step 1. done.")
+                        .param("url","http://www.hallo.nl"))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(MockMvcResultMatchers.view().name("redirect:/recipe/" + ID + "/show"));
     }
 
     @Test
@@ -116,4 +122,21 @@ class RecipeControllerTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(view().name("numberFormatError"));
     }
+
+//    @Test
+//    public void testPostNewRecipeFormValidationFail() throws Exception {
+//        RecipeCommand command = new RecipeCommand();
+//        command.setId(2L);
+//
+//        when(recipeService.saveRecipeCommand(any())).thenReturn(command);
+//
+//        mockMvc.perform(MockMvcRequestBuilders.post("/recipe/")
+//                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+//                        .param("id", "")
+//                        .param("cookTime", "3000")
+//                )
+//                .andExpect(status().isOk())
+//                .andExpect(model().attributeExists("recipe"))
+//                .andExpect(view().name("recipe/recipeForm"));
+//    }
 }

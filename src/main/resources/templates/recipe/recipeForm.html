@@ -21,6 +21,9 @@
 <div class="container-fluid" style="margin-top: 20px ">
     <div class="col-md-6 offset-3">
         <form th:object="${recipe}" th:action="@{/recipe/}" method="post" style="margin-bottom: 25px">
+            <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+                <p>Please Correct Errors Below</p>
+            </div>
             <input type="hidden" th:field="*{id}"/>
             <div class="card border border-primary border-4">
                 <h4 class="card-header bg-primary text-white" style="--bs-bg-opacity: 1">Edit Recipe Information</h4>
