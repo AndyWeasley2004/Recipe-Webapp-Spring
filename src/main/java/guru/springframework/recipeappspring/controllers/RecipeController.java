@@ -16,6 +16,7 @@ import javax.validation.Valid;
 @Slf4j
 @Controller
 public class RecipeController {
+
     private static final String RECIPE_RECIPEFORM_URL = "recipe/recipeForm";
     private final RecipeService recipeService;
 
@@ -34,14 +35,14 @@ public class RecipeController {
     public String newRecipe(Model model){
         model.addAttribute("recipe", new RecipeCommand());
         log.debug("Form created");
-        return RECIPE_RECIPEFORM_URL;
+        return "recipe/recipeForm";
     }
 
-    @GetMapping({"recipe/{id}/update"})
+    @GetMapping("recipe/{id}/update")
     public String updateRecipe(@PathVariable String id, Model model){
         model.addAttribute("recipe", recipeService.findCommandById(Long.valueOf(id)));
         log.debug("Updating recipe " + Long.valueOf(id));
-        return RECIPE_RECIPEFORM_URL;
+        return "recipe/recipeForm";
     }
 
     @PostMapping("recipe/")
@@ -49,6 +50,7 @@ public class RecipeController {
         log.debug("saveOrUpdate is runned");
         log.debug("bindingresult has value " + bindingResult.hasFieldErrors("prepTime"));
         if(bindingResult.hasErrors()){
+
             bindingResult.getAllErrors().forEach(objectError -> {
                 log.debug(objectError.toString());
             });
@@ -61,11 +63,12 @@ public class RecipeController {
         return "redirect:/recipe/" + savedCommand.getId() + "/show";
     }
 
-
-    @GetMapping("/recipe/{id}/delete")
+    @GetMapping("recipe/{id}/delete")
     public String deleteById(@PathVariable String id){
-        recipeService.deleteById(Long.valueOf(id));
+
         log.debug("Deleting id: " + id);
+
+        recipeService.deleteById(Long.valueOf(id));
         return "redirect:/";
     }
 
