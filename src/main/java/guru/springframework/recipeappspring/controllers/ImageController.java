@@ -4,6 +4,7 @@ package guru.springframework.recipeappspring.controllers;
 import guru.springframework.recipeappspring.commands.RecipeCommand;
 import guru.springframework.recipeappspring.services.ImageService;
 import guru.springframework.recipeappspring.services.RecipeService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.stereotype.Controller;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;

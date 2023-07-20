@@ -1,15 +1,15 @@
 package guru.springframework.recipeappspring.commands;
 
 import guru.springframework.recipeappspring.domain.Difficulty;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.URL;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -37,6 +37,7 @@ public class RecipeCommand {
     private String source;
 
     @URL
+    @NotBlank
     private String url;
 
     @NotBlank
