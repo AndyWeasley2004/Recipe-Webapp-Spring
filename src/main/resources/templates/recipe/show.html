@@ -14,6 +14,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
             crossorigin="anonymous" th:href="@{/webjars/bootstrap/5.3.0/css/bootstrap.min.css}"></script>
+    <link href="forms.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
 <body>
 <!--/*@thymesVar id="recipe" type="guru.springframework.domain.Recipe"*/-->
@@ -22,9 +24,11 @@
         <div class="col-md-6 offset-3">
             <div class="card">
                 <div class="card-header bg-primary" style="--bs-bg-opacity: .5">
-                    <h3 th:text="${recipe.description}">Recipe Description Here!</h3>
-                    <a class="btn btn-light" href="#"
-                       th:href="@{'/recipe/' + ${recipe.id} + '/image'}" role="button">Change Image</a>
+                    <div class="row">
+                        <h3 class="col-9" th:text="${recipe.description}">Recipe Description Here!</h3>
+                        <a class="btn btn-light col-3 bg-opacity-75" style="width: fit-content; margin-left: 20px" href="#"
+                           th:href="@{'/recipe/' + ${recipe.id} + '/image'}" role="button">Change Image</a>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -85,16 +89,18 @@
                             <h5>URL:</h5>
                         </div>
                         <div class="col-md-3">
-                            <p><a href="#" th:href="${recipe.url}">View Original</a></p>
+                            <p><a class="link-info" href="#" th:href="${recipe.url}">View Original</a></p>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="card" style="margin-top: 20px">
                 <div class="card-header bg-danger" style="margin-bottom: 10px;--bs-bg-opacity: .5">
-                    <h3>Ingredients</h3>
-                    <a class="btn btn-light" href="#" th:href="@{'/recipe/' + ${recipe.id} + '/ingredients'}"
-                       role="button">View</a>
+                    <div class="row">
+                        <h3 class="col-10">Ingredients</h3>
+                        <a class="btn btn-light col-2" style="width: fit-content; margin-left: 25px" href="#" th:href="@{'/recipe/' + ${recipe.id} + '/ingredients'}"
+                           role="button">View</a>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="row">

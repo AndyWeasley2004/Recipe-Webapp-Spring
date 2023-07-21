@@ -1,0 +1,11 @@
+.btn-light:hover, .btn-light:focus, .btn-light:active, .btn-light.active, .open>.dropdown-toggle.btn-light {
+    color: #000000;
+    background-color: #bdbdc7;
+    border-color: #494a4d; /*set the color you want here*/
+}
+
+.btn-outline-success:hover, .btn-outline-success:focus, .btn-outline-success:active, .btn-outline-success.active, .open>.dropdown-toggle.btn-outline-success {
+    color: #2cc715;
+    background-color: #dffcd4;
+    border-color: #3dad3f; /*set the color you want here*/
+}
