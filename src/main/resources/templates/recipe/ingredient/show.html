@@ -1,58 +1,53 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8"/>
-  <title>View Ingredient</title>
+    <meta charset="UTF-8"/>
+    <title>View Ingredient</title>
 
-  <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"
-        th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous"
+          th:href="@{/webjars/bootstrap/5.3.0/css/bootstrap.min.css}">
 
-  <script src="/webjars/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.2.4.js"
+            integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+            crossorigin="anonymous"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+            crossorigin="anonymous" th:href="@{/webjars/bootstrap/5.3.0/css/bootstrap.min.css}"></script>
 
-  <!-- Latest compiled and minified JavaScript -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-          integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-          crossorigin="anonymous" th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
 </head>
 <body>
 <!--/*@thymesVar id="ingredient" type="guru.springframework.commands.IngredientCommand"*/-->
 <div class="container-fluid" style="margin-top: 20px">
-  <div class="row">
-    <div class="col-md-6 col-md-offset-3">
-      <div class="panel panel-primary">
+    <div class="card offset-3" style="width: 600px">
 
-        <div class="panel-heading">
-          <h1 class="panel-title">Ingredient</h1>
+        <div class="card-header bg-danger-subtle">
+            <h2 class="card-title">Ingredient</h2>
         </div>
-        <div class="panel-body">
-
-          <div class="table-responsive">
-            <table class="table table-hover ">
-              <thead class="thead-inverse">
-              <tr>
-                <th>ID</th>
-                <th>Description</th>
-              </tr>
-              </thead>
-              <tr th:remove="all">
-                <td>12333</td>
-                <td>Tasty Goodnees 2</td>
-                <td><a href="#">View</a></td>
-                <td><a href="#">Update</a></td>
-                <td><a href="#">Delete</a></td>
-              </tr>
-              <tr>
-                <td th:text="${ingredient.id}">334</td>
-                <td th:text="${ingredient.amount} + ' ' + ${ingredient.uom.getDescription()} + ' ' + ${ingredient.description}">Tasty Goodnees 3</td>
-              </tr>
-            </table>
-          </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover ">
+                    <thead class="thead-inverse">
+                    <tr>
+                        <th>ID</th>
+                        <th>Description</th>
+                    </tr>
+                    </thead>
+                    <tr th:remove="all">
+                        <td>12333</td>
+                        <td>Tasty Goodnees 2</td>
+                    </tr>
+                    <tr>
+                        <td th:text="${ingredient.id}">334</td>
+                        <td th:text="${ingredient.amount} + ' ' + ${ingredient.uom.getDescription()} + ' ' + ${ingredient.description}">
+                            Tasty Goodnees 3
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
 
 </body>
