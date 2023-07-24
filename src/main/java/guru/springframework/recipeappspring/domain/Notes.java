@@ -18,7 +18,7 @@ public class Notes {
     @OneToOne
     private Recipe recipe;
 
-    @Lob // to allow larger than 255 characters input
+    @Column(columnDefinition = "TEXT")// to allow larger than 255 characters input
     private String recipeNotes;
 
 }

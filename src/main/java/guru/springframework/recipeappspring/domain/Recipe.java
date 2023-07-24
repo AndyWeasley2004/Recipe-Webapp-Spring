@@ -23,7 +23,7 @@ public class Recipe {
     private String source;
     private String url;
 
-    @Lob
+    @Column(columnDefinition = "TEXT")
     private String directions;
 
     @Enumerated(value = EnumType.STRING) // to avoid error when adding or changing enum class
